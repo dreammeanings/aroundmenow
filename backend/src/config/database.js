@@ -1,6 +1,29 @@
 const knex = require('knex');
 require('dotenv').config();
 
+// Helper function to parse DATABASE_URL and add SSL settings
+function getConnectionConfig() {
+  if (process.env.DATABASE_URL) {
+    // For DATABASE_URL, we need to add SSL settings
+    return {
+      connection: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false }
+    };
+  }
+  
+  // Fallback to individual environment variables
+  return {
+    connection: {
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT || 5432,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      ssl: { rejectUnauthorized: false }
+    }
+  };
+}
+
 const config = {
   development: {
     client: 'postgresql',
@@ -44,17 +67,7 @@ const config = {
   },
   production: {
     client: 'postgresql',
-    connection: process.env.DATABASE_URL || {
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT || 5432,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      ssl: { 
-        rejectUnauthorized: false,
-        ca: process.env.DB_CA_CERT
-      }
-    },
+    ...getConnectionConfig(),
     migrations: {
       directory: './migrations'
     },
