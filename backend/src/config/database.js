@@ -50,7 +50,10 @@ const config = {
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      ssl: { rejectUnauthorized: false }
+      ssl: { 
+        rejectUnauthorized: false,
+        ca: process.env.DB_CA_CERT
+      }
     },
     migrations: {
       directory: './migrations'
