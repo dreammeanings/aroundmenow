@@ -1,0 +1,70 @@
+name: around-me-now
+services:
+  - name: backend
+    source_dir: /backend
+    github:
+      repo: dreammeanings/aroundmenow
+      branch: main
+    run_command: npm start
+    environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: FRONTEND_URL
+        value: https://around-me-now-frontend.ondigitalocean.app
+      - key: JWT_SECRET
+        value: ${JWT_SECRET}
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: CORS_ORIGIN
+        value: https://around-me-now-frontend.ondigitalocean.app
+      - key: DATABASE_URL
+        value: ${DATABASE_URL}
+      - key: AWS_ACCESS_KEY_ID
+        value: ${AWS_ACCESS_KEY_ID}
+      - key: AWS_SECRET_ACCESS_KEY
+        value: ${AWS_SECRET_ACCESS_KEY}
+      - key: AWS_REGION
+        value: us-east-1
+      - key: AWS_S3_BUCKET
+        value: around-me-now-images
+      - key: STRIPE_SECRET_KEY
+        value: ${STRIPE_SECRET_KEY}
+      - key: STRIPE_PUBLISHABLE_KEY
+        value: ${STRIPE_PUBLISHABLE_KEY}
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_USER
+        value: ${SMTP_USER}
+      - key: SMTP_PASS
+        value: ${SMTP_PASS}
+      - key: GOOGLE_MAPS_API_KEY
+        value: ${GOOGLE_MAPS_API_KEY}
+      - key: EXPO_ACCESS_TOKEN
+        value: ${EXPO_ACCESS_TOKEN}
+
+  - name: frontend
+    source_dir: /
+    github:
+      repo: dreammeanings/aroundmenow
+      branch: main
+    run_command: npm run build:web && npx serve -s web-build -l 8080
+    environment_slug: static-site
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    envs:
+      - key: REACT_APP_API_URL
+        value: https://around-me-now-backend.ondigitalocean.app
+
+databases:
+  - name: postgres-db
+    engine: PG
+    version: "15"
+    production: false
+    size: db-s-1vcpu-1gb 
