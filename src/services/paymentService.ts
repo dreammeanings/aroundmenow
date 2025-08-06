@@ -38,7 +38,7 @@ export interface TicketPurchase {
 
 class PaymentService {
   private stripe: Stripe | null = null;
-  private API_BASE_URL = 'http://67.164.181.193:3000/api';
+  private API_BASE_URL = 'https://api.aroundmenowapp.com/api';
 
   async initialize() {
     try {

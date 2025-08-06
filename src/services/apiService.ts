@@ -1,6 +1,6 @@
 import { Event, Venue, User, FilterOptions } from '../types';
 
-const API_BASE_URL = 'http://67.164.181.193:3000/api';
+const API_BASE_URL = 'https://api.aroundmenowapp.com/api';
 
 class ApiService {
   private token: string = '';
