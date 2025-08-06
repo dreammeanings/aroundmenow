@@ -1,6 +1,6 @@
 import { Event, Venue, User, FilterOptions } from '../types';
 
-const API_BASE_URL = 'https://api.aroundmenowapp.com/api';
+const API_BASE_URL = 'https://around-me-now-backend.ondigitalocean.app/api';
 
 class ApiService {
   private token: string = '';
