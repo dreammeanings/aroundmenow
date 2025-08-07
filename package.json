@@ -12,7 +12,7 @@
     "test": "jest",
     "build:ios": "expo build:ios",
     "build:android": "expo build:android",
-    "build:web": "expo build:web"
+    "build:web": "npx expo export --platform web"
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
