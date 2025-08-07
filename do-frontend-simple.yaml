@@ -1,0 +1,14 @@
+name: around-me-now-frontend
+services:
+  - name: frontend
+    source_dir: /
+    github:
+      repo: dreammeanings/aroundmenow
+      branch: main
+    run_command: cd dist && python3 -m http.server 8080
+    environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    envs:
+      - key: REACT_APP_API_URL
+        value: https://api.aroundmenowapp.com 

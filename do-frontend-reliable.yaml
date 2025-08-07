@@ -1,0 +1,24 @@
+name: around-me-now-frontend
+region: nyc
+services:
+  - name: frontend
+    run_command: npm install && npx expo export --platform web --output-dir dist && node -e "const express=require('express');const app=express();app.use(express.static('dist'));app.get('*',(req,res)=>{res.sendFile('dist/index.html',{root:'.'})});app.listen(8080,()=>console.log('Server running on port 8080'))"
+    environment_slug: node-js
+    http_port: 8080
+    source_dir: /
+    instance_count: 1
+    instance_size_slug: basic-xs
+    github:
+      repo: dreammeanings/aroundmenow
+      branch: main
+    envs:
+      - key: REACT_APP_API_URL
+        value: https://api.aroundmenowapp.com
+        scope: RUN_AND_BUILD_TIME
+ingress:
+  rules:
+    - match:
+        path:
+          prefix: /
+      component:
+        name: frontend 
